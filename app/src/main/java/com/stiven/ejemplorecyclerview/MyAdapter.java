@@ -1,5 +1,6 @@
 package com.stiven.ejemplorecyclerview;
 
+import android.app.Activity;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,9 +13,13 @@ import java.util.ArrayList;
 
 public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
     private ArrayList<Deuda> mDataset;
+    private int resource;
+    private Activity activity;
 
-    public MyAdapter(ArrayList<Deuda> myDataset) {
-        mDataset = myDataset;
+    public MyAdapter(ArrayList<Deuda> myDataset, int resource, Activity activity) {
+        this.mDataset = myDataset;
+        this.resource = resource; // the layout that contains the cardview in this example
+        this.activity = activity;
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
@@ -33,7 +38,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
     public MyAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         // create a new view
         View v = (View) LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.cardview_deudas, parent, false);
+                .inflate(this.resource, parent, false);
         ViewHolder vh = new ViewHolder(v);
         return vh;
     }

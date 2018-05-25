@@ -9,8 +9,11 @@ import com.stiven.ejemplorecyclerview.model.Deuda;
 
 import java.util.ArrayList;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 public class MainActivity extends AppCompatActivity {
-    private RecyclerView mRecyclerView;
+    @BindView(R.id.recyclerview) RecyclerView mRecyclerView;
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
 
@@ -19,7 +22,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        mRecyclerView = (RecyclerView) findViewById(R.id.recyclerview);
+        ButterKnife.bind(this);
 
         // use this setting to improve performance if you know that changes
         // in content do not change the layout size of the RecyclerView
@@ -29,6 +32,14 @@ public class MainActivity extends AppCompatActivity {
         mLayoutManager = new LinearLayoutManager(this);
         mRecyclerView.setLayoutManager(mLayoutManager);
 
+        // specify an MyAdapter (see also next example)
+        mAdapter = new MyAdapter(buildDeudas(), R.layout.cardview_deudas, this);
+        mRecyclerView.setAdapter(mAdapter);
+
+    }
+
+    public ArrayList<Deuda> buildDeudas(){
+        // arrayList of the content of the cards views
         ArrayList<Deuda> deudas = new ArrayList<>();
         deudas.add(new Deuda("Jason","300.000"));
         deudas.add(new Deuda("Carolina","200.000"));
@@ -38,10 +49,6 @@ public class MainActivity extends AppCompatActivity {
         deudas.add(new Deuda("Robles","16.000"));
         deudas.add(new Deuda("Jaime","50.000"));
         deudas.add(new Deuda("Victor","3.000.000"));
-
-        // specify an MyAdapter (see also next example)
-        mAdapter = new MyAdapter(deudas);
-        mRecyclerView.setAdapter(mAdapter);
-
+        return deudas;
     }
 }
