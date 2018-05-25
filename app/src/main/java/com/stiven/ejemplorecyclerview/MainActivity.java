@@ -5,6 +5,10 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
+import com.stiven.ejemplorecyclerview.model.Deuda;
+
+import java.util.ArrayList;
+
 public class MainActivity extends AppCompatActivity {
     private RecyclerView mRecyclerView;
     private RecyclerView.Adapter mAdapter;
@@ -25,31 +29,18 @@ public class MainActivity extends AppCompatActivity {
         mLayoutManager = new LinearLayoutManager(this);
         mRecyclerView.setLayoutManager(mLayoutManager);
 
-        String[] texto = new String[20];
-
-        texto[0] = "hola";
-        texto[1] = "Mundo";
-        texto[2] = "hola";
-        texto[3] = "Mundo";
-        texto[4] = "hola";
-        texto[5] = "Mundo";
-        texto[6] = "hola";
-        texto[7] = "Mundo";
-        texto[8] = "hola";
-        texto[9] = "Mundo";
-        texto[10] = "hola";
-        texto[11] = "Mundo";
-        texto[12] = "hola";
-        texto[13] = "Mundo";
-        texto[14] = "hola";
-        texto[15] = "Mundo";
-        texto[16] = "hola";
-        texto[17] = "Mundo";
-        texto[18] = "hola";
-        texto[19] = "Mundo";
+        ArrayList<Deuda> deudas = new ArrayList<>();
+        deudas.add(new Deuda("Jason","300.000"));
+        deudas.add(new Deuda("Carolina","200.000"));
+        deudas.add(new Deuda("Carolina","25.000"));
+        deudas.add(new Deuda("Olave","3.000"));
+        deudas.add(new Deuda("Luis","100.000"));
+        deudas.add(new Deuda("Robles","16.000"));
+        deudas.add(new Deuda("Jaime","50.000"));
+        deudas.add(new Deuda("Victor","3.000.000"));
 
         // specify an MyAdapter (see also next example)
-        mAdapter = new MyAdapter(texto);
+        mAdapter = new MyAdapter(deudas);
         mRecyclerView.setAdapter(mAdapter);
 
     }
