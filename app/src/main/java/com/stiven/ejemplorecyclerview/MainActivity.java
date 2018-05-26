@@ -1,5 +1,6 @@
 package com.stiven.ejemplorecyclerview;
 
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -11,10 +12,12 @@ import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 public class MainActivity extends AppCompatActivity {
+    @BindView(R.id.fab) FloatingActionButton fab;
     @BindView(R.id.recyclerview) RecyclerView mRecyclerView;
-    private RecyclerView.Adapter mAdapter;
+    private MyAdapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
 
     @Override
@@ -33,22 +36,18 @@ public class MainActivity extends AppCompatActivity {
         mRecyclerView.setLayoutManager(mLayoutManager);
 
         // specify an MyAdapter (see also next example)
-        mAdapter = new MyAdapter(buildDeudas(), R.layout.cardview_deudas, this);
+        mAdapter = new MyAdapter(new ArrayList<Deuda>(), R.layout.cardview_deudas, this);
         mRecyclerView.setAdapter(mAdapter);
 
     }
 
-    public ArrayList<Deuda> buildDeudas(){
-        // arrayList of the content of the cards views
-        ArrayList<Deuda> deudas = new ArrayList<>();
-        deudas.add(new Deuda("Jason","300.000"));
-        deudas.add(new Deuda("Carolina","200.000"));
-        deudas.add(new Deuda("Carolina","25.000"));
-        deudas.add(new Deuda("Olave","3.000"));
-        deudas.add(new Deuda("Luis","100.000"));
-        deudas.add(new Deuda("Robles","16.000"));
-        deudas.add(new Deuda("Jaime","50.000"));
-        deudas.add(new Deuda("Victor","3.000.000"));
-        return deudas;
+    @OnClick(R.id.fab) void addCardView(){
+        mAdapter.addToList(new Deuda("Nombre: Jason","Deuda: 300.000"));
+        showDeudas();
+
+    }
+
+    public void showDeudas(){
+        mAdapter.notifyDataSetChanged();
     }
 }

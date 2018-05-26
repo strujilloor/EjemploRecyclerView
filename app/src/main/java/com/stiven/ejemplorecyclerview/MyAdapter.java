@@ -58,5 +58,9 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
         return mDataset.size();
     }
 
+    public void addToList(Deuda deuda){
+        mDataset.add(deuda);
+    }
+
 
 }
