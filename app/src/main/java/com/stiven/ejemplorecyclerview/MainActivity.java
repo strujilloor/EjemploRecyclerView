@@ -5,7 +5,14 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.TextView;
+import android.widget.Toast;
 
+import com.afollestad.materialdialogs.DialogAction;
+import com.afollestad.materialdialogs.MaterialDialog;
 import com.stiven.ejemplorecyclerview.model.Deuda;
 
 import java.util.ArrayList;
@@ -42,9 +49,32 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @OnClick(R.id.fab) void addCardView(){
-        mAdapter.addToList(new Deuda("Nombre: Jason","Deuda: 300.000"));
-        showDeudas();
 
+        boolean wrapInScrollView = false;
+        new MaterialDialog.Builder(this)
+                .title("Agregar Deuda")
+                .customView(R.layout.custom_dialog, wrapInScrollView)
+                .positiveText("Agregar")
+                .onPositive(new MaterialDialog.SingleButtonCallback() {
+                    @Override
+                    public void onClick(MaterialDialog dialog, DialogAction which) {
+                        View view = dialog.getCustomView();
+                        EditText nombre_dialog = (EditText) view.findViewById(R.id.nombre_dialog);
+                        EditText deuda_dialog = (EditText) view.findViewById(R.id.deuda_dialog);
+
+                        String nombre = nombre_dialog.getText().toString();
+                        String deuda = deuda_dialog.getText().toString();
+
+                        mAdapter.addToList(new Deuda("Nombre: " + nombre_dialog.getText().toString(),
+                                "Deuda: " + deuda_dialog.getText().toString()));
+
+                        Toast.makeText(getBaseContext(), "Added [" + nombre +","+deuda+"]",
+                                Toast.LENGTH_SHORT).show();
+                    }
+                })
+                .show();
+
+//        showDeudas();
     }
 
     public void showDeudas(){
